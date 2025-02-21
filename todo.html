@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -73,13 +72,13 @@
         }
 
         .list-group-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 10px;
-        border: 1px solid #ddd;
-        margin-bottom: 5px;
-        border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            border: 1px solid #ddd;
+            margin-bottom: 5px;
+            border-radius: 5px;
         }
 
         .item-content {
@@ -89,7 +88,7 @@
         }
 
         .check-icon {
-            color: blue;
+            color: green;
             cursor: pointer;
         }
 
@@ -104,36 +103,8 @@
             cursor: pointer;
         }
 
-
-        .fa-check {
-            color: green;
-            cursor: pointer;
-        }
-
-        .fa-trash {
-            color: red;
-            cursor: pointer;
-        }
-
-        .fa-pen {
-            color: orange;
-            cursor: pointer;
-        }
-
         #done {
             opacity: 0.5;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                max-width: 85%;
-            }
-        }
-
-        @media (max-width: 468px) {
-            .container {
-                max-width: 90%;
-            }
         }
     </style>
 </head>
@@ -190,17 +161,16 @@
             let itemContent = document.createElement("div");
             itemContent.classList.add("item-content");
 
-            let check = document.createElement("a");
-            check.href = "#";
-            check.classList.add("fa-solid", "fa-check", "check-icon");
+            let check = document.createElement("span");
+            check.innerHTML = "✔";
+            check.classList.add("check-icon");
             check.onclick = () => {
                 document.querySelector("#done").appendChild(li);
                 check.remove();
                 updateTaskStatus(text, true);
                 updateCount();
-        };
-
-        if (!done) itemContent.appendChild(check);
+            };
+            if (!done) itemContent.appendChild(check);
 
             let taskText = document.createElement("span");
             taskText.textContent = text;
@@ -210,20 +180,20 @@
 
             let iconContainer = document.createElement("div");
 
-            let edit = document.createElement("a");
-            edit.href = "#";
-            edit.classList.add("fa-solid", "fa-pen", "edit-icon");
+            let edit = document.createElement("span");
+            edit.innerHTML = "✏";
+            edit.classList.add("edit-icon");
             edit.onclick = () => editTask(li, text);
             iconContainer.appendChild(edit);
 
-            let del = document.createElement("a");
-            del.href = "#";
-            del.classList.add("fa-solid", "fa-trash", "delete-icon");
+            let del = document.createElement("span");
+            del.innerHTML = "🗑";
+            del.classList.add("delete-icon");
             del.onclick = () => {
                 li.remove();
                 removeTask(text);
                 updateCount();
-        };
+            };
             iconContainer.appendChild(del);
 
             li.appendChild(iconContainer);
@@ -234,7 +204,6 @@
                 document.querySelector("#todo").appendChild(li);
             }
         }
-
 
         function updateTaskStatus(text, done) {
             let data = getData().map(item => item.text === text ? { text, done } : item);
